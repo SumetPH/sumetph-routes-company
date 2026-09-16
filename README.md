@@ -1,4 +1,6 @@
-# Fullstack starter
+# Company Route — Google Maps test project
+
+ทดสอบเส้นทางรถยนต์จากตำแหน่งปัจจุบันของผู้ใช้ไปพิกัดบริษัทคงที่ พร้อม Google Maps polyline ระยะทาง และเวลาเดินทางตามจราจรปัจจุบัน ผ่าน `POST /api/routes/company`.
 
 Two independent applications in one repository. Each application has its own `package.json` and `pnpm-lock.yaml`; install and run commands inside that application's directory.
 
@@ -23,17 +25,24 @@ Run the applications in separate terminals.
 ```sh
 cd web
 pnpm install --frozen-lockfile
+# First setup only; preserve an existing .env.local:
+cp .env.example .env.local
 pnpm dev
 ```
 
 ```sh
 cd api
 pnpm install --frozen-lockfile
+# First setup only; preserve an existing .env:
 cp .env.example .env
 pnpm dev
 ```
 
-The API reads `.env` during development. `PORT` defaults to 3001; an exported environment variable takes precedence. The web application does not require environment variables for this starter.
+Set `GOOGLE_MAPS_API_KEY`, `COMPANY_LATITUDE`, and `COMPANY_LONGITUDE` in `api/.env`. Set `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` in `web/.env.local`. Enable Google Routes API for the server key and Maps JavaScript API for the browser key, with billing configured. Restart both apps after changing environment variables. Keys are ignored by Git; no company coordinates are assumed.
+
+The API reads `.env` during development. `PORT` defaults to 3001; an exported environment variable takes precedence. `API_BASE_URL` in the web environment defaults to http://127.0.0.1:3001. Open http://localhost:3000, get the current location or enter test coordinates, then calculate a route.
+
+See [API setup and curl example](api/README.md), [web setup](web/README.md), and the [confirmed API spec](.scratch/company-route/spec.md).
 
 ```sh
 curl http://127.0.0.1:3001/health
@@ -63,7 +72,7 @@ pnpm build
 pnpm start
 ```
 
-API tests exercise the `/health` HTTP contract through the Nest application. There is no separate web test harness for this initial scaffold. Production API startup loads `.env` if present and otherwise uses exported environment variables and the default port.
+API HTTP integration tests cover `/health` and the company route contract, with Google requests mocked. There is no separate web test harness. Production API startup loads `.env` if present and otherwise uses exported environment variables and the default port.
 
 ## Structure
 
@@ -76,7 +85,8 @@ web/
   package.json
   pnpm-lock.yaml
 api/
-  src/                 # NestJS module, controller, and bootstrap
+  src/                 # NestJS root module, health controller, and bootstrap
+    routes/            # RoutesModule, controller, service, DTO, pipe, and guard
   test/                # HTTP integration tests
   .env.example
   package.json
@@ -88,7 +98,7 @@ api/
 
 Web imports use the `@/*` alias for `src/*`. To add a shadcn/ui component, run `pnpm exec shadcn add <component>` inside `web`.
 
-Google Maps, database, authentication, and business features are outside the current setup.
+The public company route endpoint permits 10 requests/minute per direct IP in one process. Browser clients behind the local Next.js proxy share that allowance. This is a local test project; database, login, deployment, and distributed rate limiting are outside its scope.
 
 ## Primary documentation
 

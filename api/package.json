@@ -12,7 +12,8 @@
     "start": "node --env-file-if-exists=.env dist/main.js",
     "lint": "oxlint --type-aware src/ test/",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"*.ts\" \"*.json\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest"
   },

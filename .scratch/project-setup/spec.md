@@ -15,6 +15,7 @@ Status: Implemented and validated; authorized by the user's `implement` request.
 - `/web`: scaffold the Next.js application and initialize shadcn/ui with a starter page demonstrating a Button component. Run locally on port 3000.
 - `/api`: scaffold the NestJS application and expose `GET /health` returning a simple service status. Run locally on port 3001.
 - Provide independent dev, build, and lint scripts in each app.
+- Provide Prettier with `format` and `format:check` scripts in each app. Exclude generated files and lockfiles, preserve each app's existing formatting style, and require agents to format edited files before final validation and handoff.
 - Add root README setup and run instructions, appropriate ignore rules, and environment examples only where configuration is needed.
 - Verify dependency installation, production builds, lint, and local HTTP responses for both applications.
 
@@ -31,13 +32,13 @@ The agreed public API boundary is `GET /health`, returning HTTP 200 and `{ "stat
 
 Latest stable versions reported by primary npm sources during the interview:
 
-| Dependency | Version | Source |
-| --- | --- | --- |
-| Next.js | 16.3.5 | https://registry.npmjs.org/next/latest |
-| React | 19.3.0 | https://registry.npmjs.org/react/latest |
-| Tailwind CSS | 4.3.3 | https://registry.npmjs.org/tailwindcss/latest |
-| shadcn CLI | 4.21.0 | https://www.npmjs.com/package/shadcn |
-| NestJS core | 12.0.3 | https://www.npmjs.com/package/%40nestjs/core?activeTab=versions |
+| Dependency   | Version | Source                                                          |
+| ------------ | ------- | --------------------------------------------------------------- |
+| Next.js      | 16.3.5  | https://registry.npmjs.org/next/latest                          |
+| React        | 19.3.0  | https://registry.npmjs.org/react/latest                         |
+| Tailwind CSS | 4.3.3   | https://registry.npmjs.org/tailwindcss/latest                   |
+| shadcn CLI   | 4.21.0  | https://www.npmjs.com/package/shadcn                            |
+| NestJS core  | 12.0.3  | https://www.npmjs.com/package/%40nestjs/core?activeTab=versions |
 
 Installed Node.js 22.22.3 meets the documented Next.js and NestJS generation requirements. Recheck dependency versions during installation and record resolved versions in each app's lockfile.
 
