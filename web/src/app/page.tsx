@@ -74,7 +74,7 @@ export default function Home() {
           origin: { latitude: Number(latitude), longitude: Number(longitude) },
         }),
         cache: "no-store",
-        signal: AbortSignal.timeout(15_000),
+        signal: AbortSignal.timeout(90_000),
       });
       const text = await res.text();
       let data;
